@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Etiquetas — Tipo de etiqueta de caja</title>
+  <link href="https://unpkg.com/primeng@17.18.0/resources/themes/lara-light-blue/theme.css" rel="stylesheet">
+  <link href="https://unpkg.com/primeicons@7.0.0/primeicons.css" rel="stylesheet" crossorigin="anonymous">
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --primary-color-hover: #0b5ed7;
+      --primary-color-active: #0a58ca;
+      --primary-color-text: #ffffff;
+      --primary-50: #eaf1fe;
+      --primary-100: #cfe2ff;
+      --focus-ring: rgba(13, 110, 253, 0.25);
+      --text-color: #212529;
+      --text-color-secondary: #6c757d;
+      --text-heading: #212529;
+      --surface-border: #dee2e6;
+      --surface-50: #f6f7f9;
+      --surface-100: #f3f4f6;
+      --surface-200: #e9ecef;
+      --surface-300: #ced4da;
+      --surface-700: #212529;
+      --surface-hover: #eef4ff;
+      --breadcrumb-link: #0d6efd;
+      --breadcrumb-link-hover: #0a58ca;
+      --breadcrumb-muted: #6c757d;
+      --btn-cancel: #6c757d;
+      --btn-cancel-hover: #5c636a;
+      --btn-success: #4caf50;
+      --btn-success-hover: #43a047;
+      --link-color: #0d6efd;
+      --link-hover: #0a58ca;
+      --danger-color: #dc3545;
+      --danger-hover: #bb2d3b;
+      --section-gap: 1rem;
+      --table-head-bg: #ffffff;
+      --table-head-text: #212529;
+      --table-border: #dee2e6;
+      --table-stripe: #f6f7f9;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100vh;
+      font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+      background: #fff;
+      color: var(--text-color);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .pi { font-style: normal; display: inline-block; min-width: 1em; line-height: 1; }
+
+    .page-shell { min-height: 100vh; display: flex; flex-direction: column; }
+    .page-content {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 2.5rem;
+    }
+    .page-content--wide { max-width: 1280px; }
+
+    .breadcrumb { font-size: 0.875rem; color: var(--breadcrumb-muted); margin-bottom: 0.75rem; }
+    .breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; list-style: none; }
+    .breadcrumb li + li::before { content: "/"; margin-right: 0.35rem; color: var(--breadcrumb-muted); }
+    .breadcrumb a { color: var(--breadcrumb-link); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--breadcrumb-link-hover); text-decoration: underline; }
+    .breadcrumb li[aria-current="page"] { color: var(--breadcrumb-muted); }
+
+    .page-title { font-size: 1.8rem; font-weight: 600; color: var(--text-heading); margin-bottom: 1.25rem; }
+    .page-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .form-section { margin-bottom: 2rem; }
+    .section-head {
+      padding-bottom: 0.6rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--surface-200);
+    }
+    .section-title { font-size: 1.05rem; font-weight: 600; color: #334155; margin: 0; }
+
+    .form-grid { display: grid; gap: 1.1rem 1.5rem; }
+    .form-grid--2 { grid-template-columns: repeat(2, minmax(0, 440px)); }
+    .field { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+    .field-label { font-size: 0.875rem; font-weight: 500; color: var(--text-color); }
+    .required-mark { color: #dc2626; margin-left: 0.15rem; }
+    .field-hint { font-size: 0.75rem; color: var(--text-color-secondary); }
+    /* La ayuda de cada campo solo acompaña al usuario mientras lo está capturando. */
+    .field .field-hint { display: none; }
+    .field:focus-within .field-hint { display: block; }
+    .field-error { font-size: 0.75rem; color: #dc2626; }
+
+    .form-input, .form-select {
+      width: 100%;
+      min-height: 2.375rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.9rem;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      background: #fff;
+      color: var(--text-color);
+      font-family: inherit;
+    }
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 0.2rem var(--focus-ring);
+    }
+    .form-input[readonly] { background: #e9ecef; color: var(--text-color-secondary); opacity: 1; }
+    .form-input.is-interactive { cursor: text; }
+    .form-input.invalid, .form-select.invalid { border-color: #dc2626; box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.12); }
+
+    /* Dropdowns: flecha con respiro al borde derecho */
+    .form-select,
+    .table-filter-select,
+    .table-paginator__select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+      background-color: #fff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8l3.5-3.5' stroke='%236c757d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 0.75rem;
+      padding-right: 2.25rem;
+    }
+    .form-select:disabled,
+    .table-filter-select:disabled,
+    .table-paginator__select:disabled {
+      background-color: #e9ecef;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8l3.5-3.5' stroke='%23adb5bd' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      cursor: not-allowed;
+    }
+
+    .form-actions { display: flex; gap: 0.5rem; margin-top: 1.75rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.45rem 0.9rem;
+      min-height: 2.375rem;
+      border: 1px solid transparent;
+      background: #fff;
+      border-radius: 0.25rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: background-color .12s ease, border-color .12s ease, box-shadow .12s ease;
+    }
+    .btn:focus-visible { outline: none; box-shadow: 0 0 0 0.2rem var(--focus-ring); }
+    .btn-secondary { background: var(--btn-cancel); color: #fff; border-color: var(--btn-cancel); }
+    .btn-secondary:hover:not(:disabled) { background: var(--btn-cancel-hover); border-color: var(--btn-cancel-hover); }
+    .btn-success { background: var(--btn-success); color: #fff; border-color: var(--btn-success); }
+    .btn-success:hover:not(:disabled) { background: var(--btn-success-hover); border-color: var(--btn-success-hover); }
+    .btn-primary { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-color-hover); border-color: var(--primary-color-active); }
+    .btn-danger { background: var(--danger-color); color: #fff; border-color: var(--danger-color); }
+    .btn-danger:hover:not(:disabled) { background: var(--danger-hover); border-color: var(--danger-hover); }
+    .btn-outlined { background: #fff; color: #212529; border-color: #ced4da; font-weight: 500; }
+    .btn-outlined:hover:not(:disabled) { background: #f8f9fa; border-color: #adb5bd; }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
+
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      padding-bottom: 0.75rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 40;
+    }
+    .table-toolbar__left, .table-toolbar__right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .table-toolbar__left { gap: 0.5rem; }
+
+    .btn-icon { padding: 0.45rem 0.7rem; gap: 0.4rem; }
+    .btn-icon .pi { font-size: 0.95rem; }
+    .btn-icon .pi-angle-down { font-size: 0.8rem; opacity: 0.9; }
+
+    /* Mostrar/Ocultar columnas (enlace + checkboxes en línea) */
+    .col-chooser-inline { display: inline-block; }
+    .col-chooser-link {
+      font-size: 0.875rem; color: var(--link-color); text-decoration: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 500;
+    }
+    .col-chooser-link:hover { text-decoration: underline; color: var(--link-hover); }
+    .col-chooser-link .pi { font-size: 0.75rem; }
+    .col-chooser-inline__panel { margin: 0.6rem 0 0.25rem; }
+    .col-chooser-inline__panel.hidden { display: none; }
+    .col-chooser-inline__items { display: flex; flex-wrap: wrap; gap: 0.55rem 1.5rem; margin-bottom: 0.85rem; }
+    .col-chooser-inline__item { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; cursor: pointer; }
+    .col-chooser-inline__item input { accent-color: var(--primary-color); width: 1rem; height: 1rem; }
+
+    /* Export menu */
+    .export-menu { position: relative; }
+    .export-menu__panel {
+      position: absolute; top: calc(100% + 0.35rem); right: 0; min-width: 220px;
+      background: #fff; border: 1px solid var(--surface-200); border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12); padding: 0.4rem 0; z-index: 50;
+    }
+    .export-menu__panel.hidden { display: none; }
+    .export-menu__item {
+      display: flex; align-items: center; gap: 0.7rem; width: 100%; padding: 0.55rem 1.1rem;
+      border: none; background: transparent; font-family: inherit; font-size: 0.9rem; color: #212529;
+      text-align: left; cursor: pointer;
+    }
+    .export-menu__item:hover { background: #f1f5f9; }
+    .export-menu__item .pi { font-size: 1.05rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
+    .export-menu__icon--blue { color: #3b82f6; }
+    .export-menu__icon--grey { color: #64748b; }
+    .export-menu__icon--red { color: #dc3545; }
+    .export-menu__icon--green { color: #217346; }
+    #exportBtn[aria-expanded="true"] { background: #6c757d; border-color: #6c757d; color: #fff; }
+    #exportBtn[aria-expanded="true"]:hover { background: #5c636a; border-color: #5c636a; }
+
+    .card { background: #fff; border-radius: 0; box-shadow: none; overflow: visible; margin-top: 0; }
+    .data-table-scroll-pane { width: 100%; overflow-x: auto; }
+    .data-table { border-collapse: collapse; font-size: 0.875rem; width: 100%; min-width: 1320px; background: #fff; }
+    .data-table th, .data-table td {
+      padding: 0.55rem 0.75rem;
+      text-align: center;
+      border: 1px solid var(--table-border);
+      vertical-align: middle;
+    }
+    .data-table thead tr.header-row { background: var(--table-head-bg); }
+    .data-table thead tr.header-row th {
+      font-weight: 700;
+      color: var(--link-color);
+      font-size: 0.875rem;
+      text-align: left;
+      border-bottom: 2px solid var(--table-border);
+      white-space: normal;
+    }
+    .data-table thead tr.header-row th.sortable .col-header-text { cursor: pointer; }
+    .data-table thead tr.header-row th.sortable .col-header-text:hover { text-decoration: underline; }
+    .col-header-content { display: inline-flex; align-items: center; gap: 0.375rem; max-width: 100%; width: 100%; justify-content: space-between; }
+    .col-header-text { white-space: normal; line-height: 1.3; }
+    .col-header-left { display: inline-flex; align-items: center; gap: 0.35rem; min-width: 0; }
+    .sort-icon { font-size: 0.75rem; color: var(--link-color); flex-shrink: 0; }
+    .data-table thead tr.filter-row { background: var(--table-head-bg); }
+    .data-table thead tr.filter-row th { padding: 6px 8px; font-weight: 400; vertical-align: middle; border-top: none; }
+    .table-filter-field { display: flex; align-items: center; gap: 4px; }
+    .table-filter-input {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      height: 34px;
+      padding: 0 8px;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--text-color);
+      background: #fff;
+      outline: none;
+    }
+    .table-filter-input:focus {
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 0.2rem var(--focus-ring);
+    }
+
+    .data-table tbody tr { background: #fff; color: var(--text-color); }
+    .data-table tbody tr:nth-child(odd) { background: var(--table-stripe); }
+    .data-table tbody tr:hover td { background: var(--surface-hover); }
+    .data-table td.col-actions, .data-table th.col-actions { width: 130px; white-space: nowrap; }
+    .col-hidden { display: none !important; }
+
+    .row-actions { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .table-action-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: auto; height: auto; padding: 0; border: none; background: transparent;
+      color: var(--link-color); cursor: pointer; font-size: 1rem;
+    }
+    .table-action-btn:hover { color: var(--link-hover); }
+    .table-action-btn--danger { color: var(--danger-color); }
+    .table-action-btn--danger:hover { color: var(--danger-hover); }
+    .table-action-btn.is-disabled,
+    .table-action-btn--danger.is-disabled { color: #adb5bd; cursor: not-allowed; }
+    .table-action-btn.is-disabled:hover { color: #adb5bd; }
+
+    /* Tooltip flotante gestionado por JS (evita recortes del contenedor con scroll) */
+    .app-tooltip {
+      position: fixed;
+      z-index: 2000;
+      background: #212529;
+      color: #fff;
+      padding: 0.3rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      line-height: 1.2;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
+      opacity: 0;
+      transition: opacity .1s ease;
+    }
+    .app-tooltip.is-visible { opacity: 1; }
+    .app-tooltip::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+    }
+    .app-tooltip[data-placement="top"]::after { top: 100%; border-top-color: #212529; }
+    .app-tooltip[data-placement="bottom"]::after { bottom: 100%; border-bottom-color: #212529; }
+
+    .table-paginator { display: flex; align-items: center; justify-content: center; padding: 0.85rem 0 0; border-top: none; background: transparent; }
+    .table-paginator__cluster { display: inline-flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; }
+    .table-paginator__pages { display: inline-flex; align-items: center; gap: 0; }
+    .table-pag-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 2rem; height: 2rem; padding: 0 0.5rem; border: 1px solid #dee2e6;
+      margin-left: -1px; border-radius: 0; background: #fff; color: var(--link-color); cursor: pointer; font-size: 0.875rem;
+    }
+    .table-pag-btn--first,
+    #pagFirst, #labelsPagFirst { border-top-left-radius: 0.25rem; border-bottom-left-radius: 0.25rem; margin-left: 0; }
+    .table-pag-btn--last,
+    #pagLast, #labelsPagLast { border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem; }
+    .table-pag-btn:hover:not(:disabled) { background: #e9ecef; color: var(--link-hover); z-index: 1; }
+    .table-pag-btn.is-active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); font-weight: 600; z-index: 2; }
+    .table-pag-btn:disabled { color: #adb5bd; background: #fff; cursor: default; pointer-events: none; }
+    .table-pag-ellipsis {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 2rem; height: 2rem; padding: 0 0.25rem; margin-left: -1px;
+      border: 1px solid #dee2e6; background: #fff; color: #6c757d; font-size: 0.875rem; line-height: 1;
+      user-select: none;
+    }
+    .table-paginator__select {
+      height: 2rem;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      padding: 0 2.25rem 0 0.5rem;
+      margin-left: 0.75rem;
+      color: var(--text-color);
+      font-family: inherit;
+    }
+    .grid-summary { font-size: 0.875rem; color: var(--text-color); margin: 0 0 0.5rem; }
+
+    .info-callout { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.875rem; color: #64748b; margin-bottom: 1.25rem; }
+    .info-callout .pi { color: #94a3b8; font-size: 1rem; margin-top: 0.1rem; flex-shrink: 0; }
+    .info-callout__title { font-weight: 700; color: #475569; }
+    .info-callout__detail { color: var(--text-color); }
+
+    .range-preview { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.875rem; color: #64748b; margin-top: 0.25rem; }
+    .range-preview .pi { color: #94a3b8; font-size: 1rem; margin-top: 0.1rem; flex-shrink: 0; }
+    .range-preview__value { color: var(--text-color); font-weight: 600; }
+
+    .field-lock-hint {
+      font-size: 0.75rem;
+      color: var(--text-color-secondary);
+      margin-top: 0.15rem;
+      line-height: 1.35;
+    }
+    .form-select:disabled {
+      color: var(--text-color-secondary);
+      opacity: 1;
+    }
+    .table-filter-select {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      height: 34px;
+      padding: 0 2.25rem 0 8px;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--text-color);
+      outline: none;
+    }
+    .table-filter-select:focus {
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 0.2rem var(--focus-ring);
+    }
+
+    /* Chips Tag — estándar OPS (PrimeNG Tag / lara-light-blue)
+       Tonos: success (verde) e info (azul) ya usados en Deliveries / WEP olas */
+    .p-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      line-height: 1.2;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+    .p-tag--info { background: #dbeafe; color: #1d4ed8; border-color: #bfdbfe; }
+    .p-tag--help { background: #f3e8ff; color: #7e22ce; border-color: #e9d5ff; }
+
+    .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem 1.5rem; margin-bottom: 1.5rem; }
+    .meta-item__label { font-size: 0.75rem; color: var(--text-color-secondary); margin-bottom: 0.2rem; }
+    .meta-item__value { font-size: 0.875rem; font-weight: 500; color: #334155; }
+
+    .detail-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; border: 1px solid var(--table-border); margin-bottom: 1.75rem; }
+    .detail-table th, .detail-table td { border: 1px solid var(--table-border); padding: 0.6rem 0.85rem; vertical-align: middle; }
+    .detail-table tbody tr:nth-child(odd) { background: var(--table-stripe); }
+    .detail-table th { width: 35%; color: var(--surface-700); font-weight: 700; text-align: left; }
+    .detail-table td { text-align: left; color: var(--text-color); }
+
+    .labels-section { margin-top: 0.5rem; }
+    .labels-section .section-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .labels-filters-block { margin-bottom: 1rem; }
+    .labels-filters-block .section-head { margin-bottom: 0.85rem; border-bottom-color: var(--surface-200); }
+    .labels-filters-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #64748b;
+      margin: 0;
+    }
+    .labels-filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.85rem 1rem;
+      align-items: end;
+    }
+    .labels-filters .field { margin: 0; }
+    .labels-filters__actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-top: 0.15rem;
+    }
+    .labels-table { min-width: 760px; }
+    .labels-table td, .labels-table th { text-align: left; }
+    .labels-table td.col-actions, .labels-table th.col-actions { text-align: center; width: 110px; }
+    .status-badge {
+      display: inline-flex; align-items: center; padding: 0.15rem 0.55rem;
+      border-radius: 999px; font-size: 0.75rem; font-weight: 600; line-height: 1.4;
+    }
+    .status-badge--disponible { background: #e8f5e9; color: #2e7d32; }
+    .status-badge--utilizada,
+    .status-badge--no-disponible { background: #fdecea; color: #b71c1c; }
+    @media (max-width: 900px) {
+      .labels-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .labels-filters { grid-template-columns: 1fr; }
+    }
+
+    .view-hidden { display: none !important; }
+    .hidden { display: none !important; }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); z-index: 1200; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.hidden { display: none; }
+    .modal-card { background: #fff; border-radius: 8px; box-shadow: 0 16px 40px rgba(15, 23, 42, 0.2); width: 100%; max-width: 420px; padding: 1.25rem; }
+    .modal-card--wide { max-width: 480px; }
+    .modal-card__head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+    .modal-card__icon { flex-shrink: 0; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 0.8rem; }
+    .modal-card__icon--question { background: var(--primary-color); }
+    .modal-card__head .modal-card__title { margin-bottom: 0; }
+    .modal-card__title { font-size: 1rem; font-weight: 600; color: #334155; margin-bottom: 0.75rem; }
+    .modal-card__body { font-size: 0.875rem; color: var(--text-color); margin-bottom: 1.25rem; line-height: 1.5; }
+    .modal-card__actions { display: flex; justify-content: flex-end; gap: 0.5rem; }
+
+    /* PrimeNG Toast (core structure; colors from Lara theme) */
+    .p-toast { position: fixed; top: 20px; right: 20px; width: 25rem; max-width: calc(100% - 40px); z-index: 1300; }
+    .p-toast .p-toast-message { margin: 0 0 1rem 0; overflow: hidden; }
+    .p-toast .p-toast-message-content { display: flex; align-items: flex-start; }
+    .p-toast .p-toast-message-text { flex: 1 1 auto; }
+    .p-toast .p-toast-message .p-toast-message-content { padding: 1rem 1rem 1rem 1.25rem; }
+    .p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon { font-size: 1.25rem; margin-top: 0.15rem; }
+    .p-toast .p-toast-message .p-toast-message-content .p-toast-message-text { margin: 0 0 0 0.75rem; }
+    .p-toast .p-toast-icon-close { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 2rem; height: 2rem; border: none; background: transparent; cursor: pointer; border-radius: 50%; }
+
+    .page-footer { margin-top: auto; padding: 0.65rem 1rem; text-align: center; font-size: 0.8rem; color: #9ca3af; background: #f3f4f6; border-top: 1px solid #e5e7eb; }
+
+    @media (max-width: 900px) {
+      .form-grid--2 { grid-template-columns: minmax(0, 460px); max-width: 100%; }
+      .meta-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .page-content { padding: 1rem; }
+      .form-grid--2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <main class="page-content page-content--wide" id="mainContent">
+
+      <!-- LISTADO -->
+      <div id="listView">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="#">Catálogos</a></li>
+            <li aria-current="page">Etiquetas</li>
+          </ol>
+        </nav>
+        <div class="page-header-row">
+          <h1 class="page-title" style="margin-bottom:0">Etiquetas</h1>
+        </div>
+
+        <div class="table-toolbar">
+          <div class="table-toolbar__left" style="flex-direction:column; align-items:flex-start; gap:0.6rem;">
+            <button type="button" class="btn btn-success" id="goCreateBtn">Crear caja</button>
+            <div class="col-chooser-inline" id="listColChooser">
+              <a href="#" class="col-chooser-link" id="listColChooserBtn" role="button" aria-expanded="false" aria-controls="listColChooserPanel">Mostrar/Ocultar Columnas</a>
+            </div>
+          </div>
+          <div class="table-toolbar__right">
+            <div class="export-menu">
+              <button type="button" class="btn btn-outlined btn-icon" id="exportBtn" aria-haspopup="true" aria-expanded="false" aria-controls="exportMenuPanel" title="Exportar registros">
+                <i class="pi pi-external-link" aria-hidden="true"></i>
+                <i class="pi pi-angle-down" aria-hidden="true"></i>
+              </button>
+              <div id="exportMenuPanel" class="export-menu__panel hidden" role="menu" aria-label="Exportar registros"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-chooser-inline__panel hidden" id="listColChooserPanel"></div>
+
+        <div class="grid-summary" id="listSummary"></div>
+
+        <div class="card">
+          <div class="data-table-scroll-pane">
+            <table class="data-table" id="listTable">
+              <thead>
+                <tr class="header-row" id="listTableHead"></tr>
+                <tr class="filter-row" id="listTableFilterRow"></tr>
+              </thead>
+              <tbody id="listTableBody"></tbody>
+            </table>
+          </div>
+          <nav class="table-paginator" aria-label="Paginación">
+            <div class="table-paginator__cluster">
+              <button type="button" class="table-pag-btn table-pag-btn--first" id="pagFirst" aria-label="Primera página"><i class="pi pi-angle-double-left"></i></button>
+              <button type="button" class="table-pag-btn" id="pagPrev" aria-label="Página anterior"><i class="pi pi-angle-left"></i></button>
+              <div class="table-paginator__pages" id="pagPages"></div>
+              <button type="button" class="table-pag-btn" id="pagNext" aria-label="Página siguiente"><i class="pi pi-angle-right"></i></button>
+              <button type="button" class="table-pag-btn table-pag-btn--last" id="pagLast" aria-label="Última página"><i class="pi pi-angle-double-right"></i></button>
+              <select id="pageSizeSelect" class="table-paginator__select" aria-label="Registros por página">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+              </select>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <!-- CREAR -->
+      <div id="createView" class="view-hidden">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="#" data-nav="list">Catálogos</a></li>
+            <li><a href="#" data-nav="list">Etiquetas</a></li>
+            <li aria-current="page">Crear caja</li>
+          </ol>
+        </nav>
+        <h1 class="page-title">Crear caja</h1>
+        <div id="createFormRoot"></div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" data-nav="list">Cancelar</button>
+          <button type="button" class="btn btn-success" id="createSubmitBtn">Crear</button>
+        </div>
+      </div>
+
+      <!-- EDITAR -->
+      <div id="editView" class="view-hidden">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="#" data-nav="list">Catálogos</a></li>
+            <li><a href="#" data-nav="list">Etiquetas</a></li>
+            <li aria-current="page" id="editBreadcrumbCurrent">Actualizar caja</li>
+          </ol>
+        </nav>
+        <h1 class="page-title" id="editPageTitle">Actualizar caja</h1>
+        <div id="editFormRoot"></div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" data-nav="list">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="editSubmitBtn">Actualizar</button>
+        </div>
+      </div>
+
+      <!-- DETALLE -->
+      <div id="detailView" class="view-hidden">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="#" data-nav="list">Catálogos</a></li>
+            <li><a href="#" data-nav="list">Etiquetas</a></li>
+            <li aria-current="page" id="detailBreadcrumbCurrent">Detalle de caja</li>
+          </ol>
+        </nav>
+        <h1 class="page-title" id="detailPageTitle">Detalle de caja</h1>
+        <div class="page-header-row" style="margin-bottom:1.25rem">
+          <span id="detailEditWrap"><button type="button" class="btn btn-primary" id="detailEditBtn">Actualizar</button></span>
+        </div>
+        <div id="detailFormRoot"></div>
+        <div id="detailLabelsSection" class="labels-section"></div>
+      </div>
+
+    </main>
+    <footer class="page-footer">3.35.134 ©Netlogistik 2026</footer>
+  </div>
+
+  <!-- Modal eliminar MSG004 -->
+  <div id="deleteModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+    <div class="modal-card">
+      <div class="modal-card__title" id="deleteModalTitle">Eliminar caja</div>
+      <div class="modal-card__body" id="deleteModalBody"></div>
+      <div class="modal-card__actions">
+        <button type="button" class="btn btn-secondary" id="deleteCancelBtn">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="deleteConfirmBtn">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="p-toast p-toast-top-right" role="region" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = 'opsLabelBoxesCatalog_v5';
+      var LABEL_TYPES_STORAGE_KEY = 'opsLabelTypesCatalog_v1';
+      var CURRENT_USER = 'admin.wms';
+
+      var ID_FORMAT = /^Caja-\d{8}-\d+$/;
+      var NAME_FORMAT = /^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñÜü .,'\-]{1,50}$/;
+      var RANGE_FORMAT = /^[A-Za-z0-9_-]{1,20}$/;
+
+      var ETIQUETA_CAJA = {
+        TARIMA_BULTO: 'tarima_bulto',
+        CAJA: 'caja'
+      };
+      var ETIQUETA_CAJA_LABELS = {
+        tarima_bulto: 'Tarima y bulto',
+        caja: 'Caja'
+      };
+      function etiquetaCajaLabel(value) {
+        return ETIQUETA_CAJA_LABELS[value] || ETIQUETA_CAJA_LABELS.tarima_bulto;
+      }
+      function normalizeEtiquetaCaja(value) {
+        return value === ETIQUETA_CAJA.CAJA ? ETIQUETA_CAJA.CAJA : ETIQUETA_CAJA.TARIMA_BULTO;
+      }
+      function etiquetaCajaChipHtml(value) {
+        var key = normalizeEtiquetaCaja(value);
+        var severity = key === ETIQUETA_CAJA.CAJA ? 'help' : 'info';
+        return '<span class="p-tag p-tag--' + severity + '">' + escapeHtml(etiquetaCajaLabel(key)) + '</span>';
+      }
+
+      /* ---------- Mensajes de sistema ---------- */
+      var MSG = {
+        MSG001: 'El registro se ha creado correctamente.',
+        MSG002: 'El registro se ha actualizado correctamente.',
+        MSG004: '¿Estás seguro de eliminar este registro? Esta acción no puede revertirse.',
+        MSG005: 'El registro se ha eliminado correctamente.',
+        MSG006: 'La etiqueta se ha eliminado correctamente.'
+      };
+
+      var EXPORT_FORMATS = [
+        { id: 'html', label: 'HTML', icon: 'pi-file', color: 'blue' },
+        { id: 'csv', label: 'CSV', icon: 'pi-file', color: 'blue' },
+        { id: 'text', label: 'Text', icon: 'pi-file', color: 'grey' },
+        { id: 'pdf', label: 'PDF', icon: 'pi-file-pdf', color: 'red' },
+        { id: 'xls', label: 'Excel 95 +', icon: 'pi-file-excel', color: 'green' },
+        { id: 'xlsx', label: 'Excel 2007 +', icon: 'pi-file-excel', color: 'green' }
+      ];
+
+      var LIST_COLUMNS = [
+        { key: 'id', label: 'Identificador de la caja', visible: true },
+        { key: 'nombre', label: 'Nombre de la caja', visible: true },
+        {
+          key: 'etiquetaCaja',
+          label: 'Nivel de etiquetado',
+          visible: true,
+          filterType: 'select',
+          filterOptions: [
+            { value: '', label: 'Todo' },
+            { value: 'Tarima y bulto', label: 'Tarima y bulto' },
+            { value: 'Caja', label: 'Caja' }
+          ]
+        },
+        { key: 'tipoEtiqueta', label: 'Tipo de etiquetas', visible: true },
+        { key: 'inicio', label: 'Rango de inicio', visible: true },
+        { key: 'fin', label: 'Rango de fin', visible: true },
+        { key: 'total', label: 'Total de etiquetas generadas', visible: true, numeric: true },
+        { key: 'disponibles', label: 'Etiquetas disponibles', visible: true, numeric: true },
+        { key: 'utilizadas', label: 'Etiquetas utilizadas', visible: true, numeric: true },
+        { key: 'updatedBy', label: 'Actualizado por', visible: true },
+        { key: 'updatedAt', label: 'Actualizado', visible: true },
+        { key: 'createdAt', label: 'Creado', visible: false }
+      ];
+      var DATE_KEYS = ['updatedAt', 'createdAt'];
+
+      var listState = { filters: {}, page: 1, pageSize: 10, sortKey: null, sortDir: 'asc' };
+      var labelsState = { etiqueta: '', delivery: '', tarimaBulto: '', estatus: '', page: 1, pageSize: 10 };
+      var editingId = null;
+      var deletingId = null;
+      var deletingLabel = null;
+      var lastDetailId = null;
+      var boxForms = {};
+
+      /* ---------- Utilidades ---------- */
+      function escapeHtml(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+
+      function formatDateTime(iso) {
+        if (!iso) return '—';
+        return new Date(iso).toLocaleString('es-MX', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      }
+      function formatDateTimeLong(iso) {
+        if (!iso) return '—';
+        return new Date(iso).toLocaleString('es-MX', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit', timeZoneName: 'short' });
+      }
+      function recordsSummary(start, end, total) {
+        if (!total) return 'No se encontraron resultados.';
+        return 'Mostrando ' + start + '-' + end + ' de ' + total + ' elemento' + (total === 1 ? '' : 's') + '.';
+      }
+
+      function showToast(detail, summary, severity) {
+        severity = severity || 'success';
+        var iconMap = { success: 'pi-check', info: 'pi-info-circle', warn: 'pi-exclamation-triangle', error: 'pi-times-circle' };
+        var container = document.getElementById('toast');
+        var msg = document.createElement('div');
+        msg.className = 'p-toast-message p-toast-message-' + severity + ' p-toast-message-enter-done';
+        msg.setAttribute('role', 'alert');
+        msg.innerHTML =
+          '<div class="p-toast-message-content">' +
+            '<span class="p-toast-message-icon pi ' + (iconMap[severity] || 'pi-check') + '"></span>' +
+            '<div class="p-toast-message-text">' +
+              '<span class="p-toast-summary">' + escapeHtml(summary || '') + '</span>' +
+              '<div class="p-toast-detail">' + escapeHtml(detail) + '</div>' +
+            '</div>' +
+            '<button type="button" class="p-toast-icon-close p-link" aria-label="Cerrar">' +
+              '<span class="p-toast-icon-close-icon pi pi-times"></span>' +
+            '</button>' +
+          '</div>';
+        container.appendChild(msg);
+        var close = function () { if (msg.parentNode) msg.parentNode.removeChild(msg); };
+        msg.querySelector('.p-toast-icon-close').addEventListener('click', close);
+        setTimeout(close, 3500);
+      }
+
+      /* ---------- Catálogo de tipos de etiquetas (solo Activos) ---------- */
+      function defaultLabelTypes() {
+        return [
+          { id: 'TE-STD', nombre: 'Estándar', status: 'Activo' },
+          { id: 'TE-ESP', nombre: 'Armado especial', status: 'Activo' },
+          { id: 'TE-FRAG', nombre: 'Frágil', status: 'Activo' },
+          { id: 'TE-PRI', nombre: 'Prioritaria', status: 'Activo' },
+          { id: 'TE-RET', nombre: 'Retorno', status: 'Activo' },
+          { id: 'TE-TEMP', nombre: 'Temperatura', status: 'Activo' },
+          { id: 'TE-BULK', nombre: 'Granel', status: 'Activo' },
+          { id: 'TE-MIX', nombre: 'Mixta', status: 'Activo' },
+          { id: 'TE-QR', nombre: 'QR logística', status: 'Activo' },
+          { id: 'TE-RFID', nombre: 'RFID', status: 'Activo' },
+          { id: 'TE-OUT', nombre: 'Outbound', status: 'Activo' },
+          { id: 'TE-IN', nombre: 'Inbound', status: 'Activo' }
+        ];
+      }
+
+      function loadLabelTypesCatalog() {
+        try {
+          var raw = localStorage.getItem(LABEL_TYPES_STORAGE_KEY);
+          if (!raw) return defaultLabelTypes();
+          var parsed = JSON.parse(raw);
+          if (!Array.isArray(parsed) || !parsed.length) return defaultLabelTypes();
+          return parsed.map(function (r) {
+            return {
+              id: String(r.id || '').trim(),
+              nombre: String(r.nombre || '').trim(),
+              status: r.status === 'Inactivo' ? 'Inactivo' : 'Activo'
+            };
+          }).filter(function (r) { return r.id && r.nombre; });
+        } catch (e) {
+          return defaultLabelTypes();
+        }
+      }
+
+      function getActiveLabelTypes() {
+        return loadLabelTypesCatalog().filter(function (t) { return t.status === 'Activo'; });
+      }
+
+      function resolveTipoEtiquetaNombre(tipoId, fallbackNombre) {
+        if (fallbackNombre) return fallbackNombre;
+        if (!tipoId) return '—';
+        var found = loadLabelTypesCatalog().find(function (t) { return t.id === tipoId; });
+        return found ? found.nombre : tipoId;
+      }
+
+      /* ================================================================
+         RANGOS ALFANUMÉRICOS
+         Formato: prefijo opcional + sufijo numérico (ej. 1000, A100, ETQ-001).
+         Las etiquetas se generan incrementando el sufijo numérico.
+      ================================================================ */
+      function splitRangeToken(value) {
+        var m = String(value).match(/^(.*?)(\d+)$/);
+        if (!m) return null;
+        return { prefix: m[1], num: Number(m[2]), width: m[2].length };
+      }
+
+      function analyzeRange(inicio, fin) {
+        var a = splitRangeToken(inicio);
+        var b = splitRangeToken(fin);
+        if (!a || !b) return null;
+        if (a.prefix !== b.prefix) return null;
+        if (b.num <= a.num) return null;
+        return {
+          prefix: a.prefix,
+          start: a.num,
+          end: b.num,
+          width: Math.max(a.width, b.width)
+        };
+      }
+
+      function formatLabel(meta, n) {
+        var numStr = String(n);
+        if (meta.width > numStr.length) {
+          numStr = Array(meta.width - numStr.length + 1).join('0') + numStr;
+        }
+        return meta.prefix + numStr;
+      }
+
+      function buildUsedFromHasta(inicio, fin, usadasHasta) {
+        var meta = analyzeRange(String(inicio), String(fin));
+        var usadas = [];
+        if (!meta || usadasHasta == null) return usadas;
+        var until = Number(usadasHasta);
+        if (isNaN(until)) {
+          var tok = splitRangeToken(String(usadasHasta));
+          until = tok ? tok.num : NaN;
+        }
+        if (isNaN(until)) return usadas;
+        for (var n = meta.start; n <= Math.min(until, meta.end); n++) {
+          usadas.push(formatLabel(meta, n));
+        }
+        return usadas;
+      }
+
+      function normalizeRecord(r) {
+        var inicio = String(r.inicio);
+        var fin = String(r.fin);
+        var usadas = Array.isArray(r.usadas) ? r.usadas.map(String) : buildUsedFromHasta(inicio, fin, r.usadasHasta);
+        var excluidas = Array.isArray(r.excluidas) ? r.excluidas.map(String) : [];
+        var asignaciones = r.asignaciones && typeof r.asignaciones === 'object' ? r.asignaciones : {};
+        var tipoEtiquetaId = r.tipoEtiquetaId ? String(r.tipoEtiquetaId) : '';
+        var tipoEtiquetaNombre = r.tipoEtiquetaNombre ? String(r.tipoEtiquetaNombre) : '';
+        return {
+          id: r.id,
+          nombre: r.nombre,
+          etiquetaCaja: normalizeEtiquetaCaja(r.etiquetaCaja),
+          tipoEtiquetaId: tipoEtiquetaId,
+          tipoEtiquetaNombre: tipoEtiquetaNombre,
+          inicio: inicio,
+          fin: fin,
+          usadas: usadas,
+          excluidas: excluidas,
+          asignaciones: asignaciones,
+          updatedBy: r.updatedBy,
+          updatedAt: r.updatedAt,
+          createdAt: r.createdAt,
+          deleted: !!r.deleted,
+          auditLog: r.auditLog || []
+        };
+      }
+
+      function isExcluded(rec, label) {
+        return (rec.excluidas || []).indexOf(String(label)) !== -1;
+      }
+
+      function isUsed(rec, label) {
+        return (rec.usadas || []).indexOf(String(label)) !== -1;
+      }
+
+      function iterateLabels(rec, fn) {
+        var meta = analyzeRange(rec.inicio, rec.fin);
+        if (!meta) return;
+        for (var n = meta.start; n <= meta.end; n++) {
+          var label = formatLabel(meta, n);
+          if (isExcluded(rec, label)) continue;
+          if (fn(label) === false) break;
+        }
+      }
+
+      function listActiveLabels(rec) {
+        var out = [];
+        iterateLabels(rec, function (label) { out.push(label); });
+        return out;
+      }
+
+      function usedCount(rec) {
+        var count = 0;
+        (rec.usadas || []).forEach(function (label) {
+          if (!isExcluded(rec, label)) count++;
+        });
+        return count;
+      }
+
+      function totalCount(rec) {
+        var meta = analyzeRange(rec.inicio, rec.fin);
+        if (!meta) return 0;
+        return (meta.end - meta.start + 1) - (rec.excluidas || []).length;
+      }
+
+      function isAssigned(rec) { return usedCount(rec) > 0; }
+
+      function hasCrAssigned(rec) {
+        var asg = rec.asignaciones || {};
+        return Object.keys(asg).some(function (label) {
+          if (!isUsed(rec, label) || isExcluded(rec, label)) return false;
+          var cr = asg[label] && asg[label].cr != null ? String(asg[label].cr).trim() : '';
+          return !!cr && cr !== '—';
+        });
+      }
+
+      function usedLabelsInRange(rec) {
+        var used = [];
+        iterateLabels(rec, function (label) {
+          if (isUsed(rec, label)) used.push(label);
+        });
+        return used;
+      }
+
+      function formatBoxDate(date) {
+        var d = date || new Date();
+        var dd = String(d.getDate());
+        var mm = String(d.getMonth() + 1);
+        var yyyy = String(d.getFullYear());
+        if (dd.length < 2) dd = '0' + dd;
+        if (mm.length < 2) mm = '0' + mm;
+        return dd + mm + yyyy;
+      }
+
+      function buildBoxId(date, consecutive) {
+        return 'Caja-' + formatBoxDate(date) + '-' + consecutive;
+      }
+
+      /* ================================================================
+         DATOS
+      ================================================================ */
+      function seedRecords() {
+        var types = getActiveLabelTypes();
+        var seeds = [
+          { nombre: 'Caja Andén 1', inicio: '1000', fin: '1999', usadasHasta: 1249 },
+          { nombre: 'Caja Andén 2', inicio: '2000', fin: '2499', usadasHasta: null },
+          { nombre: 'Caja Pasillo A', inicio: '2500', fin: '3000', usadasHasta: 2599 },
+          { nombre: 'Caja Pasillo B', inicio: '3001', fin: '3500', usadasHasta: null },
+          { nombre: 'Caja Recibo Norte', inicio: '4000', fin: '4999', usadasHasta: 4099 },
+          { nombre: 'Caja Recibo Sur', inicio: '5000', fin: '5499', usadasHasta: null },
+          { nombre: 'Caja Embarque 1', inicio: '6000', fin: '6999', usadasHasta: 6499 },
+          { nombre: 'Caja Embarque 2', inicio: '7000', fin: '7250', usadasHasta: null, etiquetaCaja: ETIQUETA_CAJA.CAJA },
+          { nombre: 'Caja Devoluciones', inicio: '8000', fin: '8500', usadasHasta: null, etiquetaCaja: ETIQUETA_CAJA.CAJA },
+          { nombre: 'Caja Inventario Cíclico', inicio: '9000', fin: '9999', usadasHasta: 9099 },
+          { nombre: 'Caja Armado Especial', inicio: 'ETQ-001', fin: 'ETQ-200', usadasHasta: 'ETQ-015', etiquetaCaja: ETIQUETA_CAJA.CAJA },
+          { nombre: 'Caja Ola Nocturna', inicio: 'A100', fin: 'A250', usadasHasta: 'A110' }
+        ];
+        var users = ['jperez', 'mlopez', 'admin.wms', 'rgarcia', 'acastillo'];
+        var deliveries = ['DEL-1001', 'DEL-2045', 'DEL-3110', 'DEL-4022', 'DEL-5188'];
+        var dayCounters = {};
+        return seeds.map(function (s, i) {
+          var created = new Date(2026, 0, 5 + i * 2, 9 + (i % 8), 15, 0);
+          var updated = new Date(2026, 5, 1 + i, 14, 30, 0);
+          var dateKey = formatBoxDate(created);
+          dayCounters[dateKey] = (dayCounters[dateKey] || 0) + 1;
+          var tipo = types[i % Math.max(types.length, 1)] || { id: 'TE-STD', nombre: 'Estándar' };
+          var rec = normalizeRecord({
+            id: buildBoxId(created, dayCounters[dateKey]),
+            nombre: s.nombre,
+            etiquetaCaja: s.etiquetaCaja || ETIQUETA_CAJA.TARIMA_BULTO,
+            tipoEtiquetaId: tipo.id,
+            tipoEtiquetaNombre: tipo.nombre,
+            inicio: s.inicio,
+            fin: s.fin,
+            usadasHasta: s.usadasHasta,
+            updatedBy: users[i % users.length],
+            updatedAt: updated.toISOString(),
+            createdAt: created.toISOString(),
+            deleted: false,
+            auditLog: []
+          });
+          var asignaciones = {};
+          (rec.usadas || []).forEach(function (label, idx) {
+            if (idx % 3 !== 0) return;
+            asignaciones[label] = {
+              cr: 'CR-' + String(100 + (i * 3) + (idx % 7)),
+              delivery: deliveries[(i + idx) % deliveries.length],
+              tarimaBulto: 'T' + ((idx % 4) + 1) + ' / B' + String(100 + (idx % 9) + 1)
+            };
+          });
+          rec.asignaciones = asignaciones;
+          return rec;
+        });
+      }
+
+      var Store = {
+        load: function () {
+          try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) {
+              var seed = seedRecords();
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
+              return seed;
+            }
+            return JSON.parse(raw).map(normalizeRecord);
+          } catch (e) {
+            return seedRecords();
+          }
+        },
+        saveAll: function (records) { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); },
+        getActive: function () { return Store.load().filter(function (r) { return !r.deleted; }); },
+        getById: function (id) {
+          return Store.load().find(function (r) { return r.id === id && !r.deleted; }) || null;
+        },
+        idExists: function (id, excludeId) {
+          return Store.load().some(function (r) {
+            return !r.deleted && r.id.toLowerCase() === String(id).toLowerCase() && (!excludeId || r.id !== excludeId);
+          });
+        },
+        nextId: function (date) {
+          var d = date || new Date();
+          var datePart = formatBoxDate(d);
+          var re = new RegExp('^Caja-' + datePart + '-(\\d+)$');
+          var max = 0;
+          Store.load().forEach(function (r) {
+            var m = String(r.id).match(re);
+            if (m) max = Math.max(max, Number(m[1]));
+          });
+          return buildBoxId(d, max + 1);
+        },
+        overlapping: function (inicio, fin, excludeId) {
+          var meta = analyzeRange(inicio, fin);
+          if (!meta) return [];
+          return Store.getActive().filter(function (r) {
+            if (excludeId && r.id === excludeId) return false;
+            var other = analyzeRange(r.inicio, r.fin);
+            if (!other || other.prefix !== meta.prefix) return false;
+            return meta.start <= other.end && meta.end >= other.start;
+          });
+        },
+        create: function (record) {
+          var all = Store.load();
+          all.push(normalizeRecord(record));
+          Store.saveAll(all);
+        },
+        update: function (id, patch) {
+          var all = Store.load();
+          var idx = all.findIndex(function (r) { return r.id === id; });
+          if (idx === -1) return null;
+          all[idx] = normalizeRecord(Object.assign({}, all[idx], patch));
+          Store.saveAll(all);
+          return all[idx];
+        },
+        softDelete: function (id) { return Store.update(id, { deleted: true }); },
+        deleteLabel: function (boxId, label) {
+          var rec = Store.getById(boxId);
+          if (!rec) return null;
+          var excluidas = (rec.excluidas || []).slice();
+          if (excluidas.indexOf(label) === -1) excluidas.push(label);
+          var usadas = (rec.usadas || []).filter(function (u) { return u !== label; });
+          var asignaciones = Object.assign({}, rec.asignaciones || {});
+          delete asignaciones[label];
+          return Store.update(boxId, {
+            excluidas: excluidas,
+            usadas: usadas,
+            asignaciones: asignaciones,
+            updatedBy: CURRENT_USER,
+            updatedAt: new Date().toISOString()
+          });
+        }
+      };
+
+      function decorate(rec) {
+        var total = totalCount(rec);
+        var utilizadas = usedCount(rec);
+        return Object.assign({}, rec, {
+          total: total,
+          utilizadas: utilizadas,
+          disponibles: Math.max(0, total - utilizadas),
+          tipoEtiqueta: resolveTipoEtiquetaNombre(rec.tipoEtiquetaId, rec.tipoEtiquetaNombre),
+          etiquetaCaja: etiquetaCajaLabel(rec.etiquetaCaja),
+          etiquetaCajaKey: normalizeEtiquetaCaja(rec.etiquetaCaja)
+        });
+      }
+
+      function showView(name) {
+        var views = ['listView', 'createView', 'editView', 'detailView'];
+        views.forEach(function (v) {
+          document.getElementById(v).classList.toggle('view-hidden', v !== name + 'View');
+        });
+        if (name === 'list') renderList();
+        window.scrollTo(0, 0);
+      }
+
+      /* ================================================================
+         LISTADO
+      ================================================================ */
+      function cellValue(row, key) {
+        if (DATE_KEYS.indexOf(key) >= 0) return formatDateTime(row[key]);
+        return row[key] == null ? '' : String(row[key]);
+      }
+
+      function isNumericKey(key) {
+        var col = LIST_COLUMNS.find(function (c) { return c.key === key; });
+        return !!(col && col.numeric);
+      }
+
+      function getFilteredRecords() {
+        var rows = Store.getActive().map(decorate).filter(function (row) {
+          return LIST_COLUMNS.every(function (col) {
+            var f = (listState.filters[col.key] || '').trim();
+            if (!f) return true;
+            var cell = cellValue(row, col.key);
+            if (col.filterType === 'select') {
+              return cell.toLowerCase() === f.toLowerCase();
+            }
+            return cell.toLowerCase().indexOf(f.toLowerCase()) !== -1;
+          });
+        });
+        if (listState.sortKey) {
+          var key = listState.sortKey;
+          var mul = listState.sortDir === 'asc' ? 1 : -1;
+          rows.sort(function (a, b) {
+            if (DATE_KEYS.indexOf(key) >= 0) return (new Date(a[key]) - new Date(b[key])) * mul;
+            if (isNumericKey(key)) return (Number(a[key]) - Number(b[key])) * mul;
+            return String(a[key] == null ? '' : a[key]).localeCompare(String(b[key] == null ? '' : b[key]), 'es') * mul;
+          });
+        }
+        return rows;
+      }
+
+      function renderListHead() {
+        var head = document.getElementById('listTableHead');
+        var filterRow = document.getElementById('listTableFilterRow');
+        head.innerHTML = '';
+        filterRow.innerHTML = '';
+
+        LIST_COLUMNS.forEach(function (col) {
+          if (!col.visible) return;
+          var th = document.createElement('th');
+          th.className = 'sortable';
+          th.dataset.col = col.key;
+          var sortIcon = '';
+          if (listState.sortKey === col.key) {
+            sortIcon = '<i class="pi ' + (listState.sortDir === 'asc' ? 'pi-sort-amount-up-alt' : 'pi-sort-amount-down') + ' sort-icon"></i>';
+          }
+          th.innerHTML =
+            '<span class="col-header-content">' +
+              '<span class="col-header-left">' +
+                '<span class="col-header-text">' + escapeHtml(col.label) + '</span>' + sortIcon +
+              '</span>' +
+            '</span>';
+          th.querySelector('.col-header-text').addEventListener('click', function () {
+            if (listState.sortKey === col.key) listState.sortDir = listState.sortDir === 'asc' ? 'desc' : 'asc';
+            else { listState.sortKey = col.key; listState.sortDir = 'asc'; }
+            renderList();
+          });
+          head.appendChild(th);
+
+          var fth = document.createElement('th');
+          fth.className = 'filter-cell';
+          var field = document.createElement('div');
+          field.className = 'table-filter-field';
+          if (col.filterType === 'select') {
+            var sel = document.createElement('select');
+            sel.className = 'table-filter-select';
+            sel.dataset.filter = col.key;
+            sel.setAttribute('aria-label', 'Filtro de columna: ' + col.label);
+            (col.filterOptions || []).forEach(function (opt) {
+              var option = document.createElement('option');
+              option.value = opt.value;
+              option.textContent = opt.label;
+              sel.appendChild(option);
+            });
+            sel.value = listState.filters[col.key] || '';
+            sel.addEventListener('change', function () {
+              listState.filters[col.key] = sel.value;
+              listState.page = 1;
+              renderListBody();
+            });
+            field.appendChild(sel);
+          } else {
+            var inp = document.createElement('input');
+            inp.type = 'text';
+            inp.className = 'table-filter-input';
+            inp.value = listState.filters[col.key] || '';
+            inp.dataset.filter = col.key;
+            inp.setAttribute('aria-label', 'Filtro de columna: ' + col.label);
+            inp.addEventListener('input', function () {
+              listState.filters[col.key] = inp.value;
+              listState.page = 1;
+              renderListBody();
+            });
+            field.appendChild(inp);
+          }
+          fth.appendChild(field);
+          filterRow.appendChild(fth);
+        });
+
+        var actTh = document.createElement('th');
+        actTh.className = 'col-actions';
+        actTh.textContent = 'Acciones';
+        head.appendChild(actTh);
+        var actF = document.createElement('th');
+        actF.className = 'col-actions filter-cell';
+        filterRow.appendChild(actF);
+      }
+
+      function renderListBody() {
+        var filtered = getFilteredRecords();
+        var totalPages = Math.max(1, Math.ceil(filtered.length / listState.pageSize));
+        if (listState.page > totalPages) listState.page = totalPages;
+        var start = (listState.page - 1) * listState.pageSize;
+        var pageRows = filtered.slice(start, start + listState.pageSize);
+
+        document.getElementById('listSummary').textContent =
+          recordsSummary(start + 1, Math.min(start + listState.pageSize, filtered.length), filtered.length);
+
+        var visibleCols = LIST_COLUMNS.filter(function (c) { return c.visible; });
+        var body = document.getElementById('listTableBody');
+        body.innerHTML = '';
+
+        if (!pageRows.length) {
+          var tr = document.createElement('tr');
+          var td = document.createElement('td');
+          td.colSpan = visibleCols.length + 1;
+          td.textContent = 'No hay cajas de etiquetas para mostrar.';
+          td.style.textAlign = 'center';
+          td.style.padding = '2rem';
+          tr.appendChild(td);
+          body.appendChild(tr);
+        } else {
+          pageRows.forEach(function (row) {
+            var tr = document.createElement('tr');
+            visibleCols.forEach(function (col) {
+              var td = document.createElement('td');
+              if (col.key === 'etiquetaCaja') {
+                td.innerHTML = etiquetaCajaChipHtml(row.etiquetaCajaKey);
+              } else {
+                td.textContent = cellValue(row, col.key);
+              }
+              tr.appendChild(td);
+            });
+            var assigned = row.utilizadas > 0;
+            var blockedMsg = 'No disponible: la caja tiene etiquetas asignadas';
+            var actTd = document.createElement('td');
+            actTd.className = 'col-actions';
+            actTd.innerHTML =
+              '<div class="row-actions">' +
+                '<button type="button" class="table-action-btn" data-action="detail" data-id="' + row.id + '" data-tooltip="Ver detalle" aria-label="Ver detalle"><i class="pi pi-eye"></i></button>' +
+                '<button type="button" class="table-action-btn" data-action="edit" data-id="' + row.id + '"' +
+                  ' data-tooltip="Editar" aria-label="Editar"><i class="pi pi-pencil"></i></button>' +
+                '<button type="button" class="table-action-btn table-action-btn--danger' + (assigned ? ' is-disabled' : '') + '" data-action="delete" data-id="' + row.id + '"' +
+                  (assigned ? ' aria-disabled="true"' : '') +
+                  ' data-tooltip="' + (assigned ? blockedMsg : 'Eliminar') + '" aria-label="Eliminar"><i class="pi pi-trash"></i></button>' +
+              '</div>';
+            tr.appendChild(actTd);
+            body.appendChild(tr);
+          });
+        }
+
+        renderPagination(totalPages);
+      }
+
+      function renderPagination(totalPages) {
+        var pager = document.querySelector('#listView .table-paginator');
+        if (pager) pager.style.display = totalPages > 1 ? '' : 'none';
+        document.getElementById('pagFirst').disabled = listState.page <= 1;
+        document.getElementById('pagPrev').disabled = listState.page <= 1;
+        document.getElementById('pagNext').disabled = listState.page >= totalPages;
+        document.getElementById('pagLast').disabled = listState.page >= totalPages;
+        var pages = document.getElementById('pagPages');
+        pages.innerHTML = '';
+        getPageWindow(listState.page, totalPages, 7).forEach(function (p) {
+          if (p == null) {
+            var ellipsis = document.createElement('span');
+            ellipsis.className = 'table-pag-ellipsis';
+            ellipsis.setAttribute('aria-hidden', 'true');
+            ellipsis.textContent = '…';
+            pages.appendChild(ellipsis);
+            return;
+          }
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'table-pag-btn' + (p === listState.page ? ' is-active' : '');
+          btn.textContent = p;
+          btn.setAttribute('aria-label', 'Página ' + p);
+          if (p === listState.page) btn.setAttribute('aria-current', 'page');
+          btn.addEventListener('click', (function (page) { return function () { listState.page = page; renderListBody(); }; })(p));
+          pages.appendChild(btn);
+        });
+      }
+
+      function renderList() {
+        renderListHead();
+        renderListBody();
+      }
+
+      /* ---------- Mostrar/Ocultar columnas ---------- */
+      function buildColChooser(panelId, columns, onChange) {
+        var panel = document.getElementById(panelId);
+        panel.innerHTML = '';
+        var items = document.createElement('div');
+        items.className = 'col-chooser-inline__items';
+        columns.forEach(function (col, idx) {
+          var label = document.createElement('label');
+          label.className = 'col-chooser-inline__item';
+          var cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.checked = col.visible;
+          cb.dataset.colIndex = idx;
+          var span = document.createElement('span');
+          span.textContent = col.label;
+          label.appendChild(cb);
+          label.appendChild(span);
+          items.appendChild(label);
+          cb.addEventListener('change', updateApplyState);
+        });
+        panel.appendChild(items);
+        var apply = document.createElement('button');
+        apply.type = 'button';
+        apply.className = 'btn btn-success';
+        apply.textContent = 'Aplicar';
+        panel.appendChild(apply);
+
+        function updateApplyState() {
+          var any = Array.prototype.some.call(items.querySelectorAll('input'), function (c) { return c.checked; });
+          apply.disabled = !any;
+        }
+        apply.addEventListener('click', function () {
+          items.querySelectorAll('input').forEach(function (cb) {
+            columns[Number(cb.dataset.colIndex)].visible = cb.checked;
+          });
+          onChange();
+          panel.classList.add('hidden');
+          var link = document.querySelector('[aria-controls="' + panelId + '"]');
+          if (link) link.setAttribute('aria-expanded', 'false');
+        });
+        updateApplyState();
+      }
+
+      function setupChooserToggle(linkId, panelId, rebuild) {
+        var link = document.getElementById(linkId);
+        var panel = document.getElementById(panelId);
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var willOpen = panel.classList.contains('hidden');
+          document.querySelectorAll('.col-chooser-inline__panel').forEach(function (p) { p.classList.add('hidden'); });
+          document.querySelectorAll('.col-chooser-link').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+          if (willOpen) {
+            if (rebuild) rebuild();
+            panel.classList.remove('hidden');
+            link.setAttribute('aria-expanded', 'true');
+          }
+        });
+      }
+
+      /* ================================================================
+         FORMULARIO DE CAJA (crear / actualizar)
+      ================================================================ */
+      function BoxForm(prefix) {
+        this.prefix = prefix;
+      }
+
+      BoxForm.prototype.el = function (suffix) {
+        return document.getElementById(this.prefix + '-' + suffix);
+      };
+
+      BoxForm.prototype.mount = function (root, options) {
+        options = options || {};
+        this.options = options;
+        var p = this.prefix;
+
+        root.innerHTML =
+          '<section class="form-section">' +
+            '<div class="section-head"><h2 class="section-title">Información de la caja</h2></div>' +
+            '<div class="form-grid form-grid--2">' +
+              '<div class="field">' +
+                '<label class="field-label" for="' + p + '-nombre">Nombre de la caja<span class="required-mark">*</span></label>' +
+                '<input id="' + p + '-nombre" type="text" class="form-input is-interactive" maxlength="50" placeholder="Nombre de la caja">' +
+                '<span class="field-error" id="' + p + '-nombre-error" hidden></span>' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="field-label" for="' + p + '-id">Identificador de la caja<span class="required-mark">*</span></label>' +
+                '<input id="' + p + '-id" type="text" class="form-input" maxlength="50" readonly>' +
+                '<span class="field-hint">Autogenerado: Caja-ddmmaaaa-consecutivo (ej. Caja-11082026-1).</span>' +
+                '<span class="field-error" id="' + p + '-id-error" hidden></span>' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="field-label" for="' + p + '-tipo">Tipo de etiquetas<span class="required-mark">*</span></label>' +
+                '<select id="' + p + '-tipo" class="form-select" aria-required="true">' +
+                  '<option value="">Selecciona un tipo de etiquetas</option>' +
+                '</select>' +
+                '<span class="field-error" id="' + p + '-tipo-error" hidden></span>' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="field-label" for="' + p + '-etiquetaCaja">Nivel de etiquetado<span class="required-mark">*</span></label>' +
+                '<select id="' + p + '-etiquetaCaja" class="form-select" aria-required="true">' +
+                  '<option value="">Selecciona un nivel de etiquetado</option>' +
+                  '<option value="' + ETIQUETA_CAJA.TARIMA_BULTO + '">Tarima y bulto</option>' +
+                  '<option value="' + ETIQUETA_CAJA.CAJA + '">Caja</option>' +
+                '</select>' +
+                '<div class="field-lock-hint" id="' + p + '-etiquetaCaja-lock" hidden>' +
+                  'No se puede modificar: ya hay al menos una etiqueta de la caja asignada a una CR.' +
+                '</div>' +
+                '<span class="field-error" id="' + p + '-etiquetaCaja-error" hidden></span>' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="field-label" for="' + p + '-inicio">Rango de inicio<span class="required-mark">*</span></label>' +
+                '<input id="' + p + '-inicio" type="text" class="form-input is-interactive" maxlength="20" placeholder="Ej. 1000 o ETQ-001">' +
+                '<span class="field-hint">Alfanumérico. Debe terminar en un número secuencial.</span>' +
+                '<span class="field-error" id="' + p + '-inicio-error" hidden></span>' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="field-label" for="' + p + '-fin">Rango de fin<span class="required-mark">*</span></label>' +
+                '<input id="' + p + '-fin" type="text" class="form-input is-interactive" maxlength="20" placeholder="Ej. 1999 o ETQ-200">' +
+                '<span class="field-hint">Mismo prefijo que el inicio y mayor al rango de inicio.</span>' +
+                '<span class="field-error" id="' + p + '-fin-error" hidden></span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="range-preview" id="' + p + '-preview" role="status">' +
+              '<i class="pi pi-info-circle" aria-hidden="true"></i>' +
+              '<div id="' + p + '-preview-text">Indica el rango para conocer cuántas etiquetas se generarán.</div>' +
+            '</div>' +
+          '</section>' +
+          (options.showMeta ? (
+            '<div class="meta-grid" id="' + p + '-meta">' +
+              '<div class="meta-item"><div class="meta-item__label">Actualizado por</div><div class="meta-item__value" id="' + p + '-updatedBy"></div></div>' +
+              '<div class="meta-item"><div class="meta-item__label">Actualizado</div><div class="meta-item__value" id="' + p + '-updatedAt"></div></div>' +
+              '<div class="meta-item"><div class="meta-item__label">Creado</div><div class="meta-item__value" id="' + p + '-createdAt"></div></div>' +
+            '</div>'
+          ) : '');
+
+        this.populateTipoOptions();
+        this.bindEvents();
+      };
+
+      BoxForm.prototype.populateTipoOptions = function (selectedId) {
+        var select = this.el('tipo');
+        if (!select) return;
+        var types = getActiveLabelTypes();
+        var current = selectedId != null ? selectedId : select.value;
+        var html = '<option value="">Selecciona un tipo de etiquetas</option>';
+        types.forEach(function (t) {
+          html += '<option value="' + escapeHtml(t.id) + '">' + escapeHtml(t.nombre) + '</option>';
+        });
+        select.innerHTML = html;
+        if (current && types.some(function (t) { return t.id === current; })) {
+          select.value = current;
+        } else if (current && selectedId) {
+          select.innerHTML = html + '<option value="' + escapeHtml(current) + '">' +
+            escapeHtml(resolveTipoEtiquetaNombre(current)) + ' (inactivo)</option>';
+          select.value = current;
+        } else {
+          select.value = '';
+        }
+      };
+
+      BoxForm.prototype.getEtiquetaCajaValue = function () {
+        var select = this.el('etiquetaCaja');
+        return select ? select.value.trim() : '';
+      };
+
+      BoxForm.prototype.setEtiquetaCajaValue = function (value) {
+        var select = this.el('etiquetaCaja');
+        if (!select) return;
+        select.value = value ? normalizeEtiquetaCaja(value) : '';
+      };
+
+      BoxForm.prototype.setEtiquetaCajaLocked = function (locked) {
+        var select = this.el('etiquetaCaja');
+        var lockHint = this.el('etiquetaCaja-lock');
+        if (select) select.disabled = !!locked;
+        if (lockHint) lockHint.hidden = !locked;
+        this.etiquetaCajaLocked = !!locked;
+      };
+
+      BoxForm.prototype.bindEvents = function () {
+        var self = this;
+        ['inicio', 'fin'].forEach(function (f) {
+          var input = self.el(f);
+          input.addEventListener('input', function () {
+            input.value = input.value.replace(/[^A-Za-z0-9_-]/g, '');
+            self.setError(f, '');
+            self.updatePreview();
+          });
+        });
+        this.el('nombre').addEventListener('input', function () { self.setError('nombre', ''); });
+        this.el('tipo').addEventListener('change', function () { self.setError('tipo', ''); });
+        this.el('etiquetaCaja').addEventListener('change', function () { self.setError('etiquetaCaja', ''); });
+      };
+
+      BoxForm.prototype.updatePreview = function () {
+        var text = this.el('preview-text');
+        var inicio = this.el('inicio').value.trim();
+        var fin = this.el('fin').value.trim();
+        var meta = analyzeRange(inicio, fin);
+        if (!meta) {
+          text.textContent = 'Indica el rango para conocer cuántas etiquetas se generarán.';
+          return;
+        }
+        var n = meta.end - meta.start + 1;
+        text.innerHTML = 'Se generarán <span class="range-preview__value">' + n + ' etiquetas</span> incrementales de la ' +
+          escapeHtml(inicio) + ' a la ' + escapeHtml(fin) + ', todas con estatus Disponible.';
+      };
+
+      BoxForm.prototype.setError = function (field, msg) {
+        var err = this.el(field + '-error');
+        var visual = this.el(field);
+        if (err) { err.textContent = msg; err.hidden = !msg; }
+        if (visual) visual.classList.toggle('invalid', !!msg);
+      };
+
+      BoxForm.prototype.clearErrors = function () {
+        ['nombre', 'id', 'tipo', 'etiquetaCaja', 'inicio', 'fin'].forEach(function (f) { this.setError(f, ''); }, this);
+      };
+
+      BoxForm.prototype.loadData = function (rec) {
+        this.populateTipoOptions(rec.tipoEtiquetaId);
+        this.el('nombre').value = rec.nombre;
+        this.el('id').value = rec.id;
+        this.el('tipo').value = rec.tipoEtiquetaId || '';
+        this.setEtiquetaCajaValue(rec.etiquetaCaja || ETIQUETA_CAJA.TARIMA_BULTO);
+        this.setEtiquetaCajaLocked(hasCrAssigned(rec));
+        this.el('inicio').value = rec.inicio;
+        this.el('fin').value = rec.fin;
+        this.updatePreview();
+        if (this.options && this.options.showMeta) {
+          this.el('updatedBy').textContent = rec.updatedBy || '—';
+          this.el('updatedAt').textContent = formatDateTime(rec.updatedAt);
+          this.el('createdAt').textContent = formatDateTime(rec.createdAt);
+        }
+      };
+
+      BoxForm.prototype.reset = function () {
+        this.populateTipoOptions();
+        this.el('nombre').value = '';
+        this.el('id').value = Store.nextId();
+        this.el('tipo').value = '';
+        this.setEtiquetaCajaValue(ETIQUETA_CAJA.TARIMA_BULTO);
+        this.setEtiquetaCajaLocked(false);
+        this.el('inicio').value = '';
+        this.el('fin').value = '';
+        this.updatePreview();
+        this.clearErrors();
+      };
+
+      BoxForm.prototype.validate = function (excludeId) {
+        this.clearErrors();
+        var ok = true;
+        var nombre = this.el('nombre').value.trim();
+        var id = this.el('id').value.trim();
+        var tipoId = this.el('tipo').value.trim();
+        var inicioRaw = this.el('inicio').value.trim();
+        var finRaw = this.el('fin').value.trim();
+
+        if (!NAME_FORMAT.test(nombre)) {
+          this.setError('nombre', 'Ingresa un nombre alfanumérico de 1 a 50 caracteres.');
+          ok = false;
+        }
+
+        if (!ID_FORMAT.test(id)) {
+          this.setError('id', 'El identificador autogenerado no es válido. Recarga e intenta de nuevo.');
+          ok = false;
+        } else if (Store.idExists(id, excludeId)) {
+          this.setError('id', 'El identificador ya existe. Debe ser único por cuenta.');
+          ok = false;
+        }
+
+        if (!tipoId) {
+          this.setError('tipo', 'Selecciona un tipo de etiquetas.');
+          ok = false;
+        } else {
+          var activeTypes = getActiveLabelTypes();
+          var tipoActivo = activeTypes.some(function (t) { return t.id === tipoId; });
+          if (!tipoActivo) {
+            this.setError('tipo', 'El tipo seleccionado no está activo. Elige otro del listado.');
+            ok = false;
+          }
+        }
+
+        var etiquetaCaja = this.getEtiquetaCajaValue();
+        if (!etiquetaCaja) {
+          this.setError('etiquetaCaja', 'Selecciona un nivel de etiquetado.');
+          ok = false;
+        } else if (excludeId) {
+          var currentRec = Store.getById(excludeId);
+          if (currentRec && hasCrAssigned(currentRec) &&
+              normalizeEtiquetaCaja(etiquetaCaja) !== normalizeEtiquetaCaja(currentRec.etiquetaCaja)) {
+            this.setError('etiquetaCaja', 'No se permite modificar el nivel de etiquetado: ya hay etiquetas asignadas a una CR.');
+            this.setEtiquetaCajaValue(currentRec.etiquetaCaja);
+            this.setEtiquetaCajaLocked(true);
+            ok = false;
+          }
+        }
+
+        if (!RANGE_FORMAT.test(inicioRaw) || !splitRangeToken(inicioRaw)) {
+          this.setError('inicio', 'Ingresa un valor alfanumérico que termine en número (ej. 1000 o ETQ-001).');
+          ok = false;
+        }
+        if (!RANGE_FORMAT.test(finRaw) || !splitRangeToken(finRaw)) {
+          this.setError('fin', 'Ingresa un valor alfanumérico que termine en número (ej. 1999 o ETQ-200).');
+          ok = false;
+        }
+
+        var meta = ok ? analyzeRange(inicioRaw, finRaw) : null;
+        if (ok && !meta) {
+          var a = splitRangeToken(inicioRaw);
+          var b = splitRangeToken(finRaw);
+          if (a && b && a.prefix !== b.prefix) {
+            this.setError('fin', 'El rango de fin debe compartir el mismo prefijo que el inicio (' + a.prefix + ').');
+          } else {
+            this.setError('fin', 'El rango de fin debe ser mayor al rango de inicio.');
+          }
+          ok = false;
+        }
+
+        if (!ok) return false;
+
+        var conflicts = Store.overlapping(inicioRaw, finRaw, excludeId);
+        if (conflicts.length) {
+          var c = conflicts[0];
+          this.setError('fin', 'El rango se traslapa con la caja ' + c.id + ' (' + c.inicio + ' a ' + c.fin + '). Una etiqueta no puede existir en dos cajas.');
+          return false;
+        }
+
+        if (excludeId) {
+          var rec = Store.getById(excludeId);
+          if (rec && usedCount(rec) > 0) {
+            var used = usedLabelsInRange(rec);
+            var usedMin = used[0];
+            var usedMax = used[used.length - 1];
+            var stillCovered = used.every(function (label) {
+              var tok = splitRangeToken(label);
+              return tok && tok.prefix === meta.prefix && tok.num >= meta.start && tok.num <= meta.end;
+            });
+            if (!stillCovered) {
+              this.setError('inicio', 'El nuevo rango debe conservar las etiquetas utilizadas (' + usedMin + ' a ' + usedMax + ').');
+              return false;
+            }
+          }
+        }
+
+        return true;
+      };
+
+      BoxForm.prototype.getValues = function () {
+        var tipoId = this.el('tipo').value.trim();
+        var tipo = getActiveLabelTypes().find(function (t) { return t.id === tipoId; });
+        return {
+          nombre: this.el('nombre').value.trim(),
+          id: this.el('id').value.trim(),
+          etiquetaCaja: normalizeEtiquetaCaja(this.getEtiquetaCajaValue()),
+          tipoEtiquetaId: tipoId,
+          tipoEtiquetaNombre: tipo ? tipo.nombre : resolveTipoEtiquetaNombre(tipoId),
+          inicio: this.el('inicio').value.trim(),
+          fin: this.el('fin').value.trim()
+        };
+      };
+
+      /* ================================================================
+         DETALLE + ETIQUETAS INDIVIDUALES
+      ================================================================ */
+      function getLabelAssignment(rec, label) {
+        var asg = (rec.asignaciones || {})[label] || {};
+        return {
+          cr: asg.cr || '—',
+          delivery: asg.delivery || '—',
+          tarimaBulto: asg.tarimaBulto || '—'
+        };
+      }
+
+      function buildLabelRows(rec) {
+        return listActiveLabels(rec).map(function (label) {
+          var used = isUsed(rec, label);
+          var asg = getLabelAssignment(rec, label);
+          return {
+            numero: label,
+            estatus: used ? 'No disponible' : 'Disponible',
+            cr: used ? asg.cr : '—',
+            delivery: used ? asg.delivery : '—',
+            tarimaBulto: used ? asg.tarimaBulto : '—',
+            used: used
+          };
+        });
+      }
+
+      function renderDetail(rec) {
+        var d = decorate(rec);
+        var rows = [
+          ['Identificador de la caja', escapeHtml(d.id)],
+          ['Nombre de la caja', escapeHtml(d.nombre)],
+          ['Nivel de etiquetado', etiquetaCajaChipHtml(d.etiquetaCajaKey)],
+          ['Tipo de etiquetas', escapeHtml(d.tipoEtiqueta)],
+          ['Rango de inicio', escapeHtml(d.inicio)],
+          ['Rango de fin', escapeHtml(d.fin)],
+          ['Total de etiquetas generadas', d.total],
+          ['Etiquetas disponibles', d.disponibles],
+          ['Etiquetas utilizadas', d.utilizadas],
+          ['Actualizado por / Usuario', escapeHtml(d.updatedBy || '—')],
+          ['Actualizado', escapeHtml(formatDateTimeLong(d.updatedAt))],
+          ['Creado', escapeHtml(formatDateTimeLong(d.createdAt))]
+        ];
+        document.getElementById('detailFormRoot').innerHTML =
+          '<section class="form-section" style="margin-bottom:1.25rem">' +
+            '<div class="section-head"><h2 class="section-title">Detalle de la caja de etiquetas</h2></div>' +
+            '<table class="detail-table"><tbody>' +
+            rows.map(function (r) { return '<tr><th>' + r[0] + '</th><td>' + r[1] + '</td></tr>'; }).join('') +
+            '</tbody></table>' +
+          '</section>';
+
+        var wrap = document.getElementById('detailEditWrap');
+        var btn = document.getElementById('detailEditBtn');
+        btn.disabled = false;
+        if (hasCrAssigned(rec)) {
+          wrap.setAttribute('data-tooltip', 'Puedes actualizar la caja; Nivel de etiquetado quedará bloqueado por asignación a CR');
+        } else {
+          wrap.removeAttribute('data-tooltip');
+        }
+
+        renderLabelsSection(rec);
+      }
+
+      function getFilteredLabels(rec) {
+        var etiqueta = (labelsState.etiqueta || '').trim().toLowerCase();
+        var delivery = (labelsState.delivery || '').trim().toLowerCase();
+        var tarima = (labelsState.tarimaBulto || '').trim().toLowerCase();
+        var estatus = (labelsState.estatus || '').trim();
+        return buildLabelRows(rec).filter(function (row) {
+          if (etiqueta && row.numero.toLowerCase().indexOf(etiqueta) === -1) return false;
+          if (delivery && String(row.delivery).toLowerCase().indexOf(delivery) === -1) return false;
+          if (tarima && String(row.tarimaBulto).toLowerCase().indexOf(tarima) === -1) return false;
+          if (estatus && row.estatus !== estatus) return false;
+          return true;
+        });
+      }
+
+      function getPageWindow(current, total, maxButtons) {
+        maxButtons = maxButtons || 7;
+        if (total <= maxButtons) {
+          var all = [];
+          for (var i = 1; i <= total; i++) all.push(i);
+          return all;
+        }
+        var pages = [];
+        var side = Math.floor((maxButtons - 3) / 2);
+        var start = Math.max(2, current - side);
+        var end = Math.min(total - 1, current + side);
+        if (current - 1 <= side + 1) {
+          end = maxButtons - 2;
+        }
+        if (total - current <= side + 1) {
+          start = total - (maxButtons - 3);
+        }
+        pages.push(1);
+        if (start > 2) pages.push(null);
+        for (var p = start; p <= end; p++) pages.push(p);
+        if (end < total - 1) pages.push(null);
+        pages.push(total);
+        return pages;
+      }
+
+      function renderLabelsSection(rec) {
+        var section = document.getElementById('detailLabelsSection');
+        var labels = getFilteredLabels(rec);
+        var totalPages = Math.max(1, Math.ceil(labels.length / labelsState.pageSize) || 1);
+        if (labelsState.page > totalPages) labelsState.page = totalPages;
+        if (labelsState.page < 1) labelsState.page = 1;
+        var start = (labelsState.page - 1) * labelsState.pageSize;
+        var pageRows = labels.slice(start, start + labelsState.pageSize);
+
+        var bodyHtml;
+        if (!pageRows.length) {
+          bodyHtml = '<tr><td colspan="6" style="text-align:center;padding:1.5rem">No hay etiquetas para mostrar.</td></tr>';
+        } else {
+          bodyHtml = pageRows.map(function (row) {
+            var statusHtml = row.used
+              ? '<span class="status-badge status-badge--no-disponible">No disponible</span>'
+              : '<span class="status-badge status-badge--disponible">Disponible</span>';
+            return '<tr>' +
+              '<td>' + escapeHtml(row.numero) + '</td>' +
+              '<td>' + statusHtml + '</td>' +
+              '<td>' + escapeHtml(row.cr) + '</td>' +
+              '<td>' + escapeHtml(row.delivery) + '</td>' +
+              '<td>' + escapeHtml(row.tarimaBulto) + '</td>' +
+              '<td class="col-actions"><div class="row-actions">' +
+                '<button type="button" class="table-action-btn table-action-btn--danger" data-label-action="delete" data-label="' + escapeHtml(row.numero) + '"' +
+                  ' data-tooltip="Eliminar etiqueta" aria-label="Eliminar etiqueta"><i class="pi pi-trash"></i></button>' +
+              '</div></td>' +
+            '</tr>';
+          }).join('');
+        }
+
+        var pageWindow = getPageWindow(labelsState.page, totalPages, 7);
+        var pagesHtml = pageWindow.map(function (p) {
+          if (p == null) return '<span class="table-pag-ellipsis" aria-hidden="true">…</span>';
+          return '<button type="button" class="table-pag-btn' + (p === labelsState.page ? ' is-active' : '') + '" data-labels-page="' + p + '" aria-label="Página ' + p + '"' +
+            (p === labelsState.page ? ' aria-current="page"' : '') + '>' + p + '</button>';
+        }).join('');
+
+        section.innerHTML =
+          '<div class="section-head">' +
+            '<h2 class="section-title">Etiquetas de la caja</h2>' +
+          '</div>' +
+          '<div class="labels-filters-block">' +
+            '<div class="section-head">' +
+              '<h3 class="labels-filters-title">Filtros de búsqueda</h3>' +
+            '</div>' +
+            '<div class="labels-filters">' +
+              '<div class="field">' +
+                '<label class="field-label" for="labelsFilterEtiqueta">Etiqueta</label>' +
+                '<input type="text" class="form-input is-interactive" id="labelsFilterEtiqueta" placeholder="Número de etiqueta" value="' + escapeHtml(labelsState.etiqueta) + '">' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="field-label" for="labelsFilterDelivery">Delivery</label>' +
+                '<input type="text" class="form-input is-interactive" id="labelsFilterDelivery" placeholder="Delivery" value="' + escapeHtml(labelsState.delivery) + '">' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="field-label" for="labelsFilterTarima">Tarima / Bulto</label>' +
+                '<input type="text" class="form-input is-interactive" id="labelsFilterTarima" placeholder="Tarima o bulto" value="' + escapeHtml(labelsState.tarimaBulto) + '">' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="field-label" for="labelsFilterEstatus">Estatus</label>' +
+                '<select id="labelsFilterEstatus" class="form-select">' +
+                  '<option value="">Todos</option>' +
+                  '<option value="Disponible"' + (labelsState.estatus === 'Disponible' ? ' selected' : '') + '>Disponible</option>' +
+                  '<option value="No disponible"' + (labelsState.estatus === 'No disponible' ? ' selected' : '') + '>No disponible</option>' +
+                '</select>' +
+              '</div>' +
+              '<div class="labels-filters__actions">' +
+                '<button type="button" class="btn btn-primary" id="labelsSearchBtn">Buscar</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="grid-summary" id="labelsSummary">' +
+            recordsSummary(labels.length ? start + 1 : 0, Math.min(start + labelsState.pageSize, labels.length), labels.length) +
+          '</div>' +
+          '<div class="card">' +
+            '<div class="data-table-scroll-pane">' +
+              '<table class="data-table labels-table" aria-label="Etiquetas de la caja">' +
+                '<thead><tr class="header-row">' +
+                  '<th>Número de etiqueta</th><th>Estatus</th><th>CR</th><th>Delivery</th><th>Tarima / Bulto</th><th class="col-actions">Acciones</th>' +
+                '</tr></thead>' +
+                '<tbody>' + bodyHtml + '</tbody>' +
+              '</table>' +
+            '</div>' +
+            '<nav class="table-paginator" id="labelsPaginator" aria-label="Paginación de etiquetas"' + (totalPages > 1 ? '' : ' style="display:none"') + '>' +
+              '<div class="table-paginator__cluster">' +
+                '<button type="button" class="table-pag-btn table-pag-btn--first" id="labelsPagFirst" aria-label="Primera página"' + (labelsState.page <= 1 ? ' disabled' : '') + '><i class="pi pi-angle-double-left"></i></button>' +
+                '<button type="button" class="table-pag-btn" id="labelsPagPrev" aria-label="Página anterior"' + (labelsState.page <= 1 ? ' disabled' : '') + '><i class="pi pi-angle-left"></i></button>' +
+                '<div class="table-paginator__pages" id="labelsPagPages">' + pagesHtml + '</div>' +
+                '<button type="button" class="table-pag-btn" id="labelsPagNext" aria-label="Página siguiente"' + (labelsState.page >= totalPages ? ' disabled' : '') + '><i class="pi pi-angle-right"></i></button>' +
+                '<button type="button" class="table-pag-btn table-pag-btn--last" id="labelsPagLast" aria-label="Última página"' + (labelsState.page >= totalPages ? ' disabled' : '') + '><i class="pi pi-angle-double-right"></i></button>' +
+                '<select id="labelsPageSizeSelect" class="table-paginator__select" aria-label="Registros por página">' +
+                  '<option value="5"' + (labelsState.pageSize === 5 ? ' selected' : '') + '>5</option>' +
+                  '<option value="10"' + (labelsState.pageSize === 10 ? ' selected' : '') + '>10</option>' +
+                  '<option value="25"' + (labelsState.pageSize === 25 ? ' selected' : '') + '>25</option>' +
+                '</select>' +
+              '</div>' +
+            '</nav>' +
+          '</div>';
+
+        bindLabelsSectionEvents(rec, totalPages);
+      }
+
+      function bindLabelsSectionEvents(rec, totalPages) {
+        function applyLabelsSearch() {
+          var etiquetaInput = document.getElementById('labelsFilterEtiqueta');
+          var deliveryInput = document.getElementById('labelsFilterDelivery');
+          var tarimaInput = document.getElementById('labelsFilterTarima');
+          var estatusSelect = document.getElementById('labelsFilterEstatus');
+          labelsState.etiqueta = etiquetaInput ? etiquetaInput.value : '';
+          labelsState.delivery = deliveryInput ? deliveryInput.value : '';
+          labelsState.tarimaBulto = tarimaInput ? tarimaInput.value : '';
+          labelsState.estatus = estatusSelect ? estatusSelect.value : '';
+          labelsState.page = 1;
+          renderLabelsSection(Store.getById(rec.id) || rec);
+        }
+
+        var searchBtn = document.getElementById('labelsSearchBtn');
+        if (searchBtn) searchBtn.addEventListener('click', applyLabelsSearch);
+
+        ['labelsFilterEtiqueta', 'labelsFilterDelivery', 'labelsFilterTarima'].forEach(function (id) {
+          var input = document.getElementById(id);
+          if (!input) return;
+          input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              applyLabelsSearch();
+            }
+          });
+        });
+
+        function goTo(page) {
+          labelsState.page = page;
+          renderLabelsSection(Store.getById(rec.id) || rec);
+        }
+
+        document.getElementById('labelsPagFirst').addEventListener('click', function () { goTo(1); });
+        document.getElementById('labelsPagPrev').addEventListener('click', function () { goTo(labelsState.page - 1); });
+        document.getElementById('labelsPagNext').addEventListener('click', function () { goTo(labelsState.page + 1); });
+        document.getElementById('labelsPagLast').addEventListener('click', function () { goTo(totalPages); });
+
+        document.getElementById('labelsPagPages').querySelectorAll('[data-labels-page]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            goTo(Number(btn.getAttribute('data-labels-page')));
+          });
+        });
+
+        document.getElementById('labelsPageSizeSelect').addEventListener('change', function () {
+          labelsState.pageSize = Number(this.value);
+          labelsState.page = 1;
+          renderLabelsSection(Store.getById(rec.id) || rec);
+        });
+
+        document.getElementById('detailLabelsSection').querySelectorAll('[data-label-action="delete"]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            openDeleteLabel(rec.id, btn.getAttribute('data-label'));
+          });
+        });
+      }
+
+      function openDeleteLabel(boxId, label) {
+        deletingId = null;
+        deletingLabel = { boxId: boxId, label: label };
+        document.getElementById('deleteModalTitle').textContent = 'Eliminar etiqueta ' + label;
+        document.getElementById('deleteModalBody').innerHTML =
+          escapeHtml(MSG.MSG004).replace('Esta acción no puede revertirse.', '<strong>Esta acción no puede revertirse.</strong>');
+        document.getElementById('deleteModal').classList.remove('hidden');
+      }
+
+      /* ================================================================
+         FLUJOS
+      ================================================================ */
+      function openCreate() {
+        boxForms.create.reset();
+        showView('create');
+      }
+
+      function openEdit(id) {
+        var rec = Store.getById(id);
+        if (!rec) return;
+        editingId = id;
+        boxForms.edit.clearErrors();
+        boxForms.edit.loadData(rec);
+        document.getElementById('editPageTitle').textContent = 'Actualizar caja ' + id;
+        document.getElementById('editBreadcrumbCurrent').textContent = 'Actualizar caja ' + id;
+        showView('edit');
+      }
+
+      function openDetail(id) {
+        var rec = Store.getById(id);
+        if (!rec) return;
+        lastDetailId = id;
+        labelsState.etiqueta = '';
+        labelsState.delivery = '';
+        labelsState.tarimaBulto = '';
+        labelsState.estatus = '';
+        labelsState.page = 1;
+        renderDetail(rec);
+        document.getElementById('detailPageTitle').textContent = 'Detalle de caja ' + id;
+        document.getElementById('detailBreadcrumbCurrent').textContent = 'Detalle de caja ' + id;
+        showView('detail');
+      }
+
+      function submitCreate() {
+        var form = boxForms.create;
+        form.el('id').value = Store.nextId();
+        if (!form.validate()) return;
+        var values = form.getValues();
+        var now = new Date().toISOString();
+        Store.create({
+          id: values.id,
+          nombre: values.nombre,
+          etiquetaCaja: values.etiquetaCaja,
+          tipoEtiquetaId: values.tipoEtiquetaId,
+          tipoEtiquetaNombre: values.tipoEtiquetaNombre,
+          inicio: values.inicio,
+          fin: values.fin,
+          usadas: [],
+          excluidas: [],
+          asignaciones: {},
+          updatedBy: CURRENT_USER,
+          updatedAt: now,
+          createdAt: now,
+          deleted: false,
+          auditLog: [{ action: 'CREATE', user: CURRENT_USER, at: now }]
+        });
+        showToast(MSG.MSG001, '¡Listo!');
+        openDetail(values.id);
+      }
+
+      function submitEdit() {
+        var form = boxForms.edit;
+        if (!form.validate(editingId)) return;
+        var values = form.getValues();
+        var now = new Date().toISOString();
+        var rec = Store.getById(editingId);
+        var log = rec && rec.auditLog ? rec.auditLog.slice() : [];
+        log.push({ action: 'UPDATE', user: CURRENT_USER, at: now });
+        var etiquetaCajaValue = hasCrAssigned(rec)
+          ? normalizeEtiquetaCaja(rec.etiquetaCaja)
+          : values.etiquetaCaja;
+        Store.update(editingId, {
+          nombre: values.nombre,
+          etiquetaCaja: etiquetaCajaValue,
+          tipoEtiquetaId: values.tipoEtiquetaId,
+          tipoEtiquetaNombre: values.tipoEtiquetaNombre,
+          inicio: values.inicio,
+          fin: values.fin,
+          updatedBy: CURRENT_USER,
+          updatedAt: now,
+          auditLog: log
+        });
+        showToast(MSG.MSG002, '¡Listo!');
+        var savedId = editingId;
+        editingId = null;
+        openDetail(savedId);
+      }
+
+      function openDelete(id) {
+        var rec = Store.getById(id);
+        if (!rec || isAssigned(rec)) return;
+        deletingLabel = null;
+        deletingId = id;
+        document.getElementById('deleteModalTitle').textContent = 'Eliminar caja ' + id;
+        document.getElementById('deleteModalBody').innerHTML =
+          escapeHtml(MSG.MSG004).replace('Esta acción no puede revertirse.', '<strong>Esta acción no puede revertirse.</strong>');
+        document.getElementById('deleteModal').classList.remove('hidden');
+      }
+
+      /* ================================================================
+         EXPORTACIÓN
+      ================================================================ */
+      function buildExportMenu() {
+        var panel = document.getElementById('exportMenuPanel');
+        panel.innerHTML = '';
+        EXPORT_FORMATS.forEach(function (fmt) {
+          var item = document.createElement('button');
+          item.type = 'button';
+          item.className = 'export-menu__item';
+          item.setAttribute('role', 'menuitem');
+          item.innerHTML = '<i class="pi ' + fmt.icon + ' export-menu__icon--' + fmt.color + '" aria-hidden="true"></i>' +
+            '<span>' + fmt.label + '</span>';
+          item.addEventListener('click', function () {
+            closeExportMenu();
+            exportRecords(fmt.id);
+          });
+          panel.appendChild(item);
+        });
+      }
+
+      function closeExportMenu() {
+        document.getElementById('exportMenuPanel').classList.add('hidden');
+        document.getElementById('exportBtn').setAttribute('aria-expanded', 'false');
+      }
+
+      function exportRecords(format) {
+        var rows = getFilteredRecords();
+        var cols = LIST_COLUMNS.filter(function (c) { return c.visible; });
+        var headers = cols.map(function (c) { return c.label; });
+        var lines = rows.map(function (r) {
+          return cols.map(function (c) { return cellValue(r, c.key); });
+        });
+        var filename = 'catalogo-etiquetas';
+        var blob;
+        if (format === 'csv' || format === 'xls' || format === 'xlsx') {
+          var csv = [headers.join(',')].concat(lines.map(function (l) {
+            return l.map(function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(',');
+          })).join('\n');
+          blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+          filename += format === 'xlsx' ? '.xlsx' : (format === 'xls' ? '.xls' : '.csv');
+        } else if (format === 'html') {
+          var html = '<html><head><meta charset="utf-8"><title>Catálogo de etiquetas</title></head><body><table border="1"><thead><tr>' +
+            headers.map(function (h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
+            lines.map(function (l) { return '<tr>' + l.map(function (v) { return '<td>' + v + '</td>'; }).join('') + '</tr>'; }).join('') +
+            '</tbody></table></body></html>';
+          blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+          filename += '.html';
+        } else if (format === 'text') {
+          var txt = [headers.join('\t')].concat(lines.map(function (l) { return l.join('\t'); })).join('\n');
+          blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+          filename += '.txt';
+        } else {
+          var pdfTxt = 'Catálogo de etiquetas\n\n' + [headers.join(' | ')].concat(lines.map(function (l) { return l.join(' | '); })).join('\n');
+          blob = new Blob([pdfTxt], { type: 'application/pdf' });
+          filename += '.pdf';
+        }
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+
+      /* ================================================================
+         EVENTOS GLOBALES
+      ================================================================ */
+      document.getElementById('goCreateBtn').addEventListener('click', openCreate);
+      document.getElementById('createSubmitBtn').addEventListener('click', submitCreate);
+      document.getElementById('editSubmitBtn').addEventListener('click', submitEdit);
+      document.getElementById('detailEditBtn').addEventListener('click', function () {
+        if (lastDetailId) openEdit(lastDetailId);
+      });
+
+      document.querySelectorAll('[data-nav="list"]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          editingId = null;
+          showView('list');
+        });
+      });
+
+      document.getElementById('listTableBody').addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        if (btn.classList.contains('is-disabled')) return;
+        var id = btn.dataset.id;
+        if (btn.dataset.action === 'edit') openEdit(id);
+        else if (btn.dataset.action === 'detail') openDetail(id);
+        else if (btn.dataset.action === 'delete') openDelete(id);
+      });
+
+      document.getElementById('deleteCancelBtn').addEventListener('click', function () {
+        deletingId = null;
+        deletingLabel = null;
+        document.getElementById('deleteModal').classList.add('hidden');
+      });
+      document.getElementById('deleteConfirmBtn').addEventListener('click', function () {
+        if (deletingLabel) {
+          Store.deleteLabel(deletingLabel.boxId, deletingLabel.label);
+          var boxId = deletingLabel.boxId;
+          deletingLabel = null;
+          document.getElementById('deleteModal').classList.add('hidden');
+          showToast(MSG.MSG006, '¡Listo!');
+          var rec = Store.getById(boxId);
+          if (rec) renderDetail(rec);
+          return;
+        }
+        if (deletingId) Store.softDelete(deletingId);
+        deletingId = null;
+        document.getElementById('deleteModal').classList.add('hidden');
+        showToast(MSG.MSG005, '¡Listo!');
+        showView('list');
+      });
+
+      setupChooserToggle('listColChooserBtn', 'listColChooserPanel', function () {
+        buildColChooser('listColChooserPanel', LIST_COLUMNS, renderList);
+      });
+
+      document.getElementById('exportBtn').addEventListener('click', function (e) {
+        e.stopPropagation();
+        var panel = document.getElementById('exportMenuPanel');
+        var willOpen = panel.classList.contains('hidden');
+        panel.classList.toggle('hidden');
+        document.getElementById('exportBtn').setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.export-menu')) closeExportMenu();
+        if (!e.target.closest('.col-chooser-inline') && !e.target.closest('.col-chooser-inline__panel')) {
+          document.querySelectorAll('.col-chooser-inline__panel').forEach(function (p) { p.classList.add('hidden'); });
+          document.querySelectorAll('.col-chooser-link').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+        }
+      });
+
+      document.getElementById('pageSizeSelect').addEventListener('change', function () {
+        listState.pageSize = Number(this.value);
+        listState.page = 1;
+        renderListBody();
+      });
+      document.getElementById('pagFirst').addEventListener('click', function () { listState.page = 1; renderListBody(); });
+      document.getElementById('pagPrev').addEventListener('click', function () { listState.page--; renderListBody(); });
+      document.getElementById('pagNext').addEventListener('click', function () { listState.page++; renderListBody(); });
+      document.getElementById('pagLast').addEventListener('click', function () {
+        listState.page = Math.ceil(getFilteredRecords().length / listState.pageSize) || 1;
+        renderListBody();
+      });
+
+      /* ---------- Tooltip flotante ---------- */
+      var tooltipEl = document.createElement('div');
+      tooltipEl.className = 'app-tooltip';
+      tooltipEl.setAttribute('role', 'tooltip');
+      document.body.appendChild(tooltipEl);
+
+      function showTooltip(target) {
+        var text = target.getAttribute('data-tooltip');
+        if (!text) return;
+        tooltipEl.textContent = text;
+        tooltipEl.style.display = 'block';
+        var r = target.getBoundingClientRect();
+        var tw = tooltipEl.offsetWidth;
+        var th = tooltipEl.offsetHeight;
+        var gap = 8;
+        var placement = 'top';
+        var top = r.top - th - gap;
+        if (top < 4) { placement = 'bottom'; top = r.bottom + gap; }
+        var left = r.left + (r.width / 2) - (tw / 2);
+        left = Math.max(6, Math.min(left, document.documentElement.clientWidth - tw - 6));
+        tooltipEl.setAttribute('data-placement', placement);
+        tooltipEl.style.top = top + 'px';
+        tooltipEl.style.left = left + 'px';
+        tooltipEl.classList.add('is-visible');
+      }
+      function hideTooltip() { tooltipEl.classList.remove('is-visible'); }
+      document.addEventListener('mouseover', function (e) {
+        var t = e.target.closest('[data-tooltip]');
+        if (t) showTooltip(t);
+      });
+      document.addEventListener('mouseout', function (e) {
+        if (e.target.closest('[data-tooltip]')) hideTooltip();
+      });
+      document.addEventListener('focusin', function (e) {
+        var t = e.target.closest('[data-tooltip]');
+        if (t) showTooltip(t);
+      });
+      document.addEventListener('focusout', hideTooltip);
+
+      /* ---------- Init ---------- */
+      function initForms() {
+        boxForms.create = new BoxForm('create');
+        boxForms.create.mount(document.getElementById('createFormRoot'), {});
+
+        boxForms.edit = new BoxForm('edit');
+        boxForms.edit.mount(document.getElementById('editFormRoot'), { showMeta: false });
+      }
+
+      initForms();
+      buildExportMenu();
+      Store.load();
+      document.getElementById('pageSizeSelect').value = String(listState.pageSize);
+      renderList();
+    })();
+  </script>
+</body>
+</html>
